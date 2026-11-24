@@ -1,5 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
+import 'screens/players_screen.dart';
+
 void main() {
   runApp(const App());
 }
@@ -13,9 +15,7 @@ class App extends StatelessWidget {
       title: 'Halı Saha Takım Kur',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorSchemeSeed: Colors.green, useMaterial3: true),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Halı Saha Takım Kur')),
-      ),
+      home: const PlayersScreen(),
     );
   }
 }
