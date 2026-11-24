@@ -41,6 +41,12 @@ flutter test
 
 ### Özellik 1: Oyuncu listesi
 
+1. Sağ alttaki **+** butonuna bas.
+2. İsim yaz, yıldızlara dokunarak 1–5 arası güç puanı seç ve **Ekle**'ye bas; oyuncu listede yıldızlarıyla görünür.
+3. İsim boşken **Ekle**'ye basınca oyuncu eklenmez.
+4. Bir oyuncuyu sola/sağa kaydırınca listeden silinir.
+5. Sayfayı yenile ya da uygulamayı kapatıp aç; liste korunur.
+
 ### Özellik 2: Dengeli takım
 
 ### Özellik 3: Kaleci
