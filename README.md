@@ -1,6 +1,10 @@
 # Halı Saha Takım Kur
 
+[![CI](https://github.com/mirhatuguzlu/hali-saha-takim-kur/actions/workflows/ci.yml/badge.svg)](https://github.com/mirhatuguzlu/hali-saha-takim-kur/actions/workflows/ci.yml)
+
 Halı saha maçı öncesi oyuncuları güç puanlarına göre iki dengeli takıma ayıran Flutter uygulaması.
+
+**Canlı deneme:** https://mirhatuguzlu.github.io/hali-saha-takim-kur/
 
 ## Problem
 
