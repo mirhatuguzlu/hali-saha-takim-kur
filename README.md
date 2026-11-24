@@ -14,10 +14,13 @@ Haftalık halı saha maçı yapan arkadaş grupları ve özellikle maçı organi
 
 - **Oyuncu listesi:** İsim ve 1–5 arası güç puanıyla oyuncu ekleme, silme; liste cihazda saklanır.
 - **Dengeli takım kurma:** Oyuncuları kişi sayısı ve toplam güç bakımından en yakın iki takıma ayırma, güç farkını gösterme, yeniden karıştırma.
+- **Kaleci:** Oyuncuyu kaleci olarak işaretleme; kaleciler takımlara ayrı dağıtılır, iki kaleci aynı takıma düşmez.
+- **WhatsApp için kopyalama:** Kurulan takımları tek tuşla panoya kopyalayıp gruba yapıştırma.
+- **Maç sonucu:** Skoru kaydetme; her oyuncunun galibiyet, beraberlik ve mağlubiyet sayısı tutulur.
 
 ## Pano
 
-İş takibi: TRELLO_LINKI_BURAYA
+İş takibi (Trello): https://trello.com/b/bail54yH
 
 ## Çalıştırma
 
@@ -39,6 +42,12 @@ flutter test
 ### Özellik 1: Oyuncu listesi
 
 ### Özellik 2: Dengeli takım
+
+### Özellik 3: Kaleci
+
+### Özellik 4: WhatsApp için kopyalama
+
+### Özellik 5: Maç sonucu
 
 ## Geliştirme süreci
 
