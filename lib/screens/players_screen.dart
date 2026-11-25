@@ -55,7 +55,13 @@ class _PlayersScreenState extends State<PlayersScreen> {
                         _update(_players.where((x) => x.id != p.id).toList()),
                     child: ListTile(
                       title: Text(p.name),
-                      subtitle: Text('★' * p.rating + '☆' * (5 - p.rating)),
+                      subtitle: Row(
+                        children: [
+                          Text('★' * p.rating + '☆' * (5 - p.rating)),
+                          const SizedBox(width: 12),
+                          Text('G ${p.wins} · B ${p.draws} · M ${p.losses}'),
+                        ],
+                      ),
                       trailing: p.isGoalkeeper
                           ? const Icon(
                               Icons.sports_handball,
@@ -71,12 +77,15 @@ class _PlayersScreenState extends State<PlayersScreen> {
         child: FilledButton(
           onPressed: _players.length < 2
               ? null
-              : () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => TeamsScreen(players: _players),
-                  ),
-                ),
+              : () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => TeamsScreen(players: _players),
+                    ),
+                  );
+                  _load();
+                },
           child: const Text('Takımları Kur'),
         ),
       ),

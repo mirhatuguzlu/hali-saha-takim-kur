@@ -86,6 +86,31 @@ void main() {
     expect(copied, contains('Takım B (güç'));
   });
 
+  testWidgets('maç sonucu kaydedilir ve listede G · B · M görünür', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+    await addPlayer(tester, 'Ali', 5);
+    await addPlayer(tester, 'Veli', 3);
+    expect(find.text('G 0 · B 0 · M 0'), findsNWidgets(2));
+    await tester.tap(find.text('Takımları Kur'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Sonucu Kaydet'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).at(0), '3');
+    await tester.enterText(find.byType(TextField).at(1), '1');
+    await tester.tap(find.text('Kaydet'));
+    await tester.pumpAndSettle();
+    expect(find.text('Sonuç kaydedildi: 3–1'), findsOneWidget);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('G 1 · B 0 · M 0'), findsOneWidget);
+    expect(find.text('G 0 · B 0 · M 1'), findsOneWidget);
+  });
+
   testWidgets('kaydırınca oyuncu silinir', (tester) async {
     await tester.pumpWidget(const App());
     await tester.pumpAndSettle();
