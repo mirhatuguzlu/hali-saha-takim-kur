@@ -1,6 +1,8 @@
+import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../logic/team_balancer.dart';
+import '../logic/team_text.dart';
 import '../models/player.dart';
 
 class TeamsScreen extends StatefulWidget {
@@ -41,7 +43,21 @@ class _TeamsScreenState extends State<TeamsScreen> {
   Widget build(BuildContext context) {
     final (a, b) = _teams;
     return Scaffold(
-      appBar: AppBar(title: const Text('Takımlar')),
+      appBar: AppBar(
+        title: const Text('Takımlar'),
+        actions: [
+          TextButton.icon(
+            onPressed: () async {
+              await Clipboard.setData(ClipboardData(text: teamsToText(a, b)));
+              if (!context.mounted) return;
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('Kopyalandı')));
+            },
+            icon: const Icon(Icons.copy),
+            label: const Text('Kopyala'),
+          ),
+        ],
+      ),
       body: ListView(
         padding: const EdgeInsets.all(8),
         children: [

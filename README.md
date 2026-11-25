@@ -68,6 +68,11 @@ flutter test
 
 ### Özellik 4: WhatsApp için kopyalama
 
+1. En az 2 oyuncu ekleyip **Takımları Kur**'a bas.
+2. Sağ üstteki **Kopyala**'ya bas; altta "Kopyalandı" bildirimi görünür.
+3. WhatsApp grubuna (ya da herhangi bir metin alanına) yapıştır; "Takım A (güç X): …" ve "Takım B (güç Y): …" satırları gelir.
+4. **Yeniden Karıştır** sonrası tekrar kopyalayınca yeni takımlar kopyalanır.
+
 ### Özellik 5: Maç sonucu
 
 ## Geliştirme süreci
