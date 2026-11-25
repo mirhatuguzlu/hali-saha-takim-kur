@@ -8,9 +8,13 @@ import '../logic/team_text.dart';
 import '../models/player.dart';
 
 class TeamsScreen extends StatefulWidget {
+  /// Players to split into teams.
   final List<Player> players;
 
-  const TeamsScreen({super.key, required this.players});
+  /// Whole roster; results are saved into it so absent players are kept.
+  final List<Player>? all;
+
+  const TeamsScreen({super.key, required this.players, this.all});
 
   @override
   State<TeamsScreen> createState() => _TeamsScreenState();
@@ -18,7 +22,7 @@ class TeamsScreen extends StatefulWidget {
 
 class _TeamsScreenState extends State<TeamsScreen> {
   late (List<Player>, List<Player>) _teams = balanceTeams(widget.players);
-  late List<Player> _all = widget.players;
+  late List<Player> _all = widget.all ?? widget.players;
 
   Future<void> _saveResult() async {
     final score = await showDialog<(int, int)>(
