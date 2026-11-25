@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,6 +57,33 @@ void main() {
     await tester.tap(find.text('Yeniden Karıştır'));
     await tester.pumpAndSettle();
     expect(find.text('Güç farkı: 2'), findsOneWidget);
+  });
+
+  testWidgets('Kopyala takımları panoya yazar ve Kopyalandı gösterir', (
+    tester,
+  ) async {
+    String? copied;
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        if (call.method == 'Clipboard.setData') {
+          copied = (call.arguments as Map)['text'] as String;
+        }
+        return null;
+      },
+    );
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+    await addPlayer(tester, 'Ali', 5);
+    await addPlayer(tester, 'Veli', 3);
+    await tester.tap(find.text('Takımları Kur'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Kopyala'));
+    await tester.pumpAndSettle();
+    expect(find.text('Kopyalandı'), findsOneWidget);
+    expect(copied, contains('Takım A (güç'));
+    expect(copied, contains('Takım B (güç'));
   });
 
   testWidgets('kaydırınca oyuncu silinir', (tester) async {
