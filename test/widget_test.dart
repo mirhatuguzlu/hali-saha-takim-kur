@@ -170,4 +170,27 @@ void main() {
     final button = tester.widget<FilledButton>(find.byType(FilledButton));
     expect(button.onPressed, isNull);
   });
+
+  testWidgets(
+    '3 galibiyet serisinde puan artırma önerisi onaylanınca puan artar',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({
+        'players':
+            '[{"id":"1","name":"Ali","rating":3,"winStreak":3},'
+            '{"id":"2","name":"Veli","rating":3,"winStreak":2}]',
+      });
+      await tester.pumpWidget(const App());
+      await tester.pumpAndSettle();
+      expect(find.byTooltip('Puanı artır'), findsOneWidget);
+
+      await tester.tap(find.byTooltip('Puanı artır'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Puanı 3 → 4'), findsOneWidget);
+      await tester.tap(find.text('Artır'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('★★★★☆'), findsOneWidget);
+      expect(find.byTooltip('Puanı artır'), findsNothing);
+    },
+  );
 }

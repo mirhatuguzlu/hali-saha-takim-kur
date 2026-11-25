@@ -7,6 +7,7 @@ class Player {
   final int draws;
   final int losses;
   final bool isComing;
+  final int winStreak;
 
   const Player({
     required this.id,
@@ -17,6 +18,7 @@ class Player {
     this.draws = 0,
     this.losses = 0,
     this.isComing = true,
+    this.winStreak = 0,
   });
 
   Player copyWith({
@@ -25,6 +27,7 @@ class Player {
     int? draws,
     int? losses,
     bool? isComing,
+    int? winStreak,
   }) => Player(
     id: id,
     name: name,
@@ -34,6 +37,7 @@ class Player {
     draws: draws ?? this.draws,
     losses: losses ?? this.losses,
     isComing: isComing ?? this.isComing,
+    winStreak: winStreak ?? this.winStreak,
   );
 
   Map<String, dynamic> toJson() => {
@@ -45,6 +49,7 @@ class Player {
     'draws': draws,
     'losses': losses,
     'isComing': isComing,
+    'winStreak': winStreak,
   };
 
   factory Player.fromJson(Map<String, dynamic> json) => Player(
@@ -56,5 +61,6 @@ class Player {
     draws: json['draws'] as int? ?? 0,
     losses: json['losses'] as int? ?? 0,
     isComing: json['isComing'] as bool? ?? true,
+    winStreak: json['winStreak'] as int? ?? 0,
   );
 }
