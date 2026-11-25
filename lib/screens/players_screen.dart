@@ -56,6 +56,12 @@ class _PlayersScreenState extends State<PlayersScreen> {
                     child: ListTile(
                       title: Text(p.name),
                       subtitle: Text('★' * p.rating + '☆' * (5 - p.rating)),
+                      trailing: p.isGoalkeeper
+                          ? const Icon(
+                              Icons.sports_handball,
+                              semanticLabel: 'Kaleci',
+                            )
+                          : null,
                     ),
                   ),
               ],
@@ -93,6 +99,7 @@ class _AddPlayerDialog extends StatefulWidget {
 class _AddPlayerDialogState extends State<_AddPlayerDialog> {
   final _name = TextEditingController();
   int _rating = 3;
+  bool _isGoalkeeper = false;
 
   @override
   void dispose() {
@@ -109,6 +116,7 @@ class _AddPlayerDialogState extends State<_AddPlayerDialog> {
         id: DateTime.now().microsecondsSinceEpoch.toString(),
         name: name,
         rating: _rating,
+        isGoalkeeper: _isGoalkeeper,
       ),
     );
   }
@@ -137,6 +145,11 @@ class _AddPlayerDialogState extends State<_AddPlayerDialog> {
                   icon: Icon(i <= _rating ? Icons.star : Icons.star_border),
                 ),
             ],
+          ),
+          CheckboxListTile(
+            title: const Text('Kaleci'),
+            value: _isGoalkeeper,
+            onChanged: (v) => setState(() => _isGoalkeeper = v ?? false),
           ),
         ],
       ),

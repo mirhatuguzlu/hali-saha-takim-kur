@@ -61,6 +61,11 @@ flutter test
 
 ### Özellik 3: Kaleci
 
+1. **+** ile oyuncu eklerken **Kaleci** kutusunu işaretle; listede oyuncunun yanında kaleci simgesi görünür.
+2. Toplam en az 4 oyuncu olacak şekilde 2 kaleci ekle.
+3. **Takımları Kur**'a bas; iki kaleci farklı takımlara düşer.
+4. **Yeniden Karıştır**'a birkaç kez bas; kaleciler hiçbir zaman aynı takımda toplanmaz, kişi farkı en fazla 1 kalır.
+
 ### Özellik 4: WhatsApp için kopyalama
 
 ### Özellik 5: Maç sonucu

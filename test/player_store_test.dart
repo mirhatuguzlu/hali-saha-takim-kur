@@ -14,13 +14,19 @@ void main() {
     final store = PlayerStore();
     await store.save(const [
       Player(id: '1', name: 'Ali', rating: 5),
-      Player(id: '2', name: 'Veli', rating: 2),
+      Player(id: '2', name: 'Veli', rating: 2, isGoalkeeper: true),
     ]);
 
     final loaded = await store.load();
     expect(loaded.map((p) => p.toJson()).toList(), [
-      {'id': '1', 'name': 'Ali', 'rating': 5},
-      {'id': '2', 'name': 'Veli', 'rating': 2},
+      {'id': '1', 'name': 'Ali', 'rating': 5, 'isGoalkeeper': false},
+      {'id': '2', 'name': 'Veli', 'rating': 2, 'isGoalkeeper': true},
     ]);
+  });
+
+  test('kaleci alanı olmayan eski kayıt bozulmaz', () {
+    final p = Player.fromJson({'id': '1', 'name': 'Ali', 'rating': 4});
+    expect(p.isGoalkeeper, isFalse);
+    expect(p.rating, 4);
   });
 }
