@@ -39,6 +39,25 @@ void main() {
     expect(find.byType(ListTile), findsNothing);
   });
 
+  testWidgets('Takımları Kur iki takımı ve güç farkını gösterir', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+    await addPlayer(tester, 'Ali', 5);
+    await addPlayer(tester, 'Veli', 3);
+
+    await tester.tap(find.text('Takımları Kur'));
+    await tester.pumpAndSettle();
+    expect(find.text('Takım A'), findsOneWidget);
+    expect(find.text('Takım B'), findsOneWidget);
+    expect(find.text('Güç farkı: 2'), findsOneWidget);
+
+    await tester.tap(find.text('Yeniden Karıştır'));
+    await tester.pumpAndSettle();
+    expect(find.text('Güç farkı: 2'), findsOneWidget);
+  });
+
   testWidgets('kaydırınca oyuncu silinir', (tester) async {
     await tester.pumpWidget(const App());
     await tester.pumpAndSettle();

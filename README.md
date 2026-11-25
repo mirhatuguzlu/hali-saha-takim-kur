@@ -53,6 +53,12 @@ flutter test
 
 ### Özellik 2: Dengeli takım
 
+1. Farklı puanlarla en az 4 oyuncu ekle (ör. 5, 4, 2, 1 yıldız).
+2. **Takımları Kur**'a bas; Takım A ve Takım B, her takımın toplam gücü ve altta "Güç farkı" görünür.
+3. Kişi sayıları en fazla 1 farklıdır (7 oyuncuda 4–3).
+4. **Yeniden Karıştır**'a bas; eşit puanlı oyuncuların yeri değişebilir, güç farkı yine en düşük seviyede kalır.
+5. Geri ok ile oyuncu listesine dönülür.
+
 ### Özellik 3: Kaleci
 
 ### Özellik 4: WhatsApp için kopyalama
