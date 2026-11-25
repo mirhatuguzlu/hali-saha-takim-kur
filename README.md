@@ -23,6 +23,7 @@ Haftalık halı saha maçı yapan arkadaş grupları ve özellikle maçı organi
 - **Maç sonucu:** Skoru kaydetme; her oyuncunun galibiyet, beraberlik ve mağlubiyet sayısı tutulur.
 - **Maç günü yoklaması:** O hafta gelecek oyuncuları işaretleme; takımlar sadece gelenlerle kurulur.
 - **Puan önerisi:** Üst üste 3 maç kazanan oyuncuya puan artırma önerisi; onaylanınca puan 1 artar (en fazla 5).
+- **Maç grupları:** Farklı maç grupları oluşturma ve aralarında geçiş; her grubun oyuncu listesi ayrı saklanır.
 
 ## Pano
 
@@ -97,6 +98,14 @@ flutter test
 2. Aynı oyuncunun takımı üst üste 3 maç kazanana kadar tekrarla (beraberlik ya da mağlubiyet seriyi sıfırlar).
 3. Oyuncu listesinde o oyuncunun yanında yeşil **Puanı artır** (yukarı ok) simgesi görünür.
 4. Simgeye bas, **Artır**'ı onayla; oyuncunun yıldızı 1 artar ve simge kaybolur. Puanı 5 olan oyuncuya öneri çıkmaz.
+
+### Özellik 8: Maç grupları
+
+1. Sağ üstte geçerli grup adı görünür (ilk açılışta **Ana grup**); mevcut oyuncular bu gruptadır.
+2. Grup adına bas, **Yeni grup**'u seç, bir ad yaz (ör. "Salı") ve **Oluştur**'a bas; boş bir oyuncu listesi açılır.
+3. Bu gruba birkaç oyuncu ekle.
+4. Grup menüsünden **Ana grup**'a geç; eski oyuncular görünür, yeni gruptakiler görünmez.
+5. Sayfayı yenile; seçili grup ve her grubun listesi korunur.
 
 ## Geliştirme süreci
 

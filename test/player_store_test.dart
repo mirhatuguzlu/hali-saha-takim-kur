@@ -51,4 +51,31 @@ void main() {
     expect([p.wins, p.draws, p.losses], [0, 0, 0]);
     expect(p.isComing, isTrue);
   });
+
+  test(
+    'her grubun listesi ayrı saklanır, ilk grup eski anahtarı kullanır',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        'players': '[{"id":"1","name":"Ali","rating":4}]',
+      });
+      expect((await const PlayerStore().load()).single.name, 'Ali');
+
+      await const PlayerStore(1)
+          .save(const [Player(id: '2', name: 'Veli', rating: 2)]);
+      expect((await const PlayerStore(1).load()).single.name, 'Veli');
+      expect((await const PlayerStore(0).load()).single.name, 'Ali');
+    },
+  );
+
+  test('gruplar ve seçili grup saklanır', () async {
+    SharedPreferences.setMockInitialValues({});
+    const groups = GroupStore();
+    expect(await groups.load(), ['Ana grup']);
+    expect(await groups.loadCurrent(), 0);
+
+    await groups.save(['Ana grup', 'Salı']);
+    await groups.saveCurrent(1);
+    expect(await groups.load(), ['Ana grup', 'Salı']);
+    expect(await groups.loadCurrent(), 1);
+  });
 }

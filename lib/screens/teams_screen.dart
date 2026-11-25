@@ -14,7 +14,15 @@ class TeamsScreen extends StatefulWidget {
   /// Whole roster; results are saved into it so absent players are kept.
   final List<Player>? all;
 
-  const TeamsScreen({super.key, required this.players, this.all});
+  /// Where results are saved (the current group).
+  final PlayerStore store;
+
+  const TeamsScreen({
+    super.key,
+    required this.players,
+    this.all,
+    this.store = const PlayerStore(),
+  });
 
   @override
   State<TeamsScreen> createState() => _TeamsScreenState();
@@ -32,7 +40,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
     if (score == null) return;
     final (a, b) = _teams;
     _all = applyResult(_all, a, b, score.$1, score.$2);
-    await PlayerStore().save(_all);
+    await widget.store.save(_all);
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Sonuç kaydedildi: ${score.$1}–${score.$2}')),

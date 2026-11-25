@@ -13,8 +13,12 @@ class PlayersScreen extends StatefulWidget {
 }
 
 class _PlayersScreenState extends State<PlayersScreen> {
-  final _store = PlayerStore();
+  final _groupStore = const GroupStore();
+  List<String> _groups = ['Ana grup'];
+  int _group = 0;
   List<Player> _players = [];
+
+  PlayerStore get _store => PlayerStore(_group);
 
   @override
   void initState() {
@@ -23,8 +27,30 @@ class _PlayersScreenState extends State<PlayersScreen> {
   }
 
   Future<void> _load() async {
-    final players = await _store.load();
-    if (mounted) setState(() => _players = players);
+    final groups = await _groupStore.load();
+    final current = await _groupStore.loadCurrent();
+    final group = current < groups.length ? current : 0;
+    final players = await PlayerStore(group).load();
+    if (!mounted) return;
+    setState(() {
+      _groups = groups;
+      _group = group;
+      _players = players;
+    });
+  }
+
+  Future<void> _selectGroup(int group) async {
+    if (group < 0) {
+      final name = await showDialog<String>(
+        context: context,
+        builder: (_) => const _NewGroupDialog(),
+      );
+      if (name == null) return;
+      group = _groups.length;
+      await _groupStore.save([..._groups, name]);
+    }
+    await _groupStore.saveCurrent(group);
+    await _load();
   }
 
   void _update(List<Player> players) {
@@ -69,7 +95,48 @@ class _PlayersScreenState extends State<PlayersScreen> {
   Widget build(BuildContext context) {
     final coming = _players.where((p) => p.isComing).toList();
     return Scaffold(
-      appBar: AppBar(title: const Text('Halı Saha Takım Kur')),
+      appBar: AppBar(
+        title: const Text('Halı Saha Takım Kur'),
+        actions: [
+          PopupMenuButton<int>(
+            tooltip: 'Grup seç',
+            onSelected: _selectGroup,
+            itemBuilder: (_) => [
+              for (var i = 0; i < _groups.length; i++)
+                CheckedPopupMenuItem(
+                  value: i,
+                  checked: i == _group,
+                  child: Text(_groups[i]),
+                ),
+              const PopupMenuDivider(),
+              const PopupMenuItem(
+                value: -1,
+                child: ListTile(
+                  leading: Icon(Icons.group_add),
+                  title: Text('Yeni grup'),
+                ),
+              ),
+            ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: [
+                  const Icon(Icons.groups),
+                  const SizedBox(width: 6),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 120),
+                    child: Text(
+                      _groups[_group],
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const Icon(Icons.arrow_drop_down),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
       body: _players.isEmpty
           ? const Center(child: Text('Henüz oyuncu yok. + ile ekle.'))
           : ListView(
@@ -127,8 +194,11 @@ class _PlayersScreenState extends State<PlayersScreen> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) =>
-                          TeamsScreen(players: coming, all: _players),
+                      builder: (_) => TeamsScreen(
+                        players: coming,
+                        all: _players,
+                        store: _store,
+                      ),
                     ),
                   );
                   _load();
@@ -215,6 +285,48 @@ class _AddPlayerDialogState extends State<_AddPlayerDialog> {
           child: const Text('İptal'),
         ),
         FilledButton(onPressed: _submit, child: const Text('Ekle')),
+      ],
+    );
+  }
+}
+
+class _NewGroupDialog extends StatefulWidget {
+  const _NewGroupDialog();
+
+  @override
+  State<_NewGroupDialog> createState() => _NewGroupDialogState();
+}
+
+class _NewGroupDialogState extends State<_NewGroupDialog> {
+  final _name = TextEditingController();
+
+  @override
+  void dispose() {
+    _name.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    final name = _name.text.trim();
+    if (name.isNotEmpty) Navigator.pop(context, name);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Yeni grup'),
+      content: TextField(
+        controller: _name,
+        autofocus: true,
+        decoration: const InputDecoration(labelText: 'Grup adı'),
+        onSubmitted: (_) => _submit(),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('İptal'),
+        ),
+        FilledButton(onPressed: _submit, child: const Text('Oluştur')),
       ],
     );
   }
