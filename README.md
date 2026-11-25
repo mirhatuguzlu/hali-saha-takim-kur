@@ -75,6 +75,12 @@ flutter test
 
 ### Özellik 5: Maç sonucu
 
+1. En az 2 oyuncu ekle; listede her oyuncunun altında "G 0 · B 0 · M 0" görünür.
+2. **Takımları Kur**'a, ardından **Sonucu Kaydet**'e bas.
+3. İki takımın gol sayısını gir (ör. 3 – 1) ve **Kaydet**'e bas; "Sonuç kaydedildi" bildirimi görünür.
+4. Geri ok ile listeye dön; kazanan takımdakilerde G, kaybedenlerde M bir artmıştır (beraberlikte herkeste B).
+5. Sayfayı yenile; galibiyet/beraberlik/mağlubiyet sayıları korunur.
+
 ## Geliştirme süreci
 
 Her iş Trello panosunda bir kart olarak "Yapılacak" sütununda başlar ve üzerinde çalışılırken "Devam Ediyor"a taşınır. Her kart için ayrı bir `feature/...` dalı açılır, iş bir pull request ile `main`'e birleştirilir ve PR bağlantısı karta eklenir. Kabul kriterleri doğrulandıktan sonra kart "Tamamlandı"ya taşınır.

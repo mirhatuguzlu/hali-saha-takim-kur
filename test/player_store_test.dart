@@ -19,8 +19,24 @@ void main() {
 
     final loaded = await store.load();
     expect(loaded.map((p) => p.toJson()).toList(), [
-      {'id': '1', 'name': 'Ali', 'rating': 5, 'isGoalkeeper': false},
-      {'id': '2', 'name': 'Veli', 'rating': 2, 'isGoalkeeper': true},
+      {
+        'id': '1',
+        'name': 'Ali',
+        'rating': 5,
+        'isGoalkeeper': false,
+        'wins': 0,
+        'draws': 0,
+        'losses': 0,
+      },
+      {
+        'id': '2',
+        'name': 'Veli',
+        'rating': 2,
+        'isGoalkeeper': true,
+        'wins': 0,
+        'draws': 0,
+        'losses': 0,
+      },
     ]);
   });
 
@@ -28,5 +44,6 @@ void main() {
     final p = Player.fromJson({'id': '1', 'name': 'Ali', 'rating': 4});
     expect(p.isGoalkeeper, isFalse);
     expect(p.rating, 4);
+    expect([p.wins, p.draws, p.losses], [0, 0, 0]);
   });
 }
