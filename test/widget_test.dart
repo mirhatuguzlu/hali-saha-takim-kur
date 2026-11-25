@@ -193,4 +193,38 @@ void main() {
       expect(find.byTooltip('Puanı artır'), findsNothing);
     },
   );
+
+  testWidgets('yeni grup oluşturulur, gruplar arası geçilir, listeler ayrı', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+    await addPlayer(tester, 'Ali', 4);
+    expect(find.text('Ana grup'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Grup seç'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Yeni grup'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'Salı');
+    await tester.tap(find.text('Oluştur'));
+    await tester.pumpAndSettle();
+    expect(find.text('Salı'), findsOneWidget);
+    expect(find.text('Ali'), findsNothing);
+
+    await addPlayer(tester, 'Veli', 2);
+    await tester.tap(find.byTooltip('Grup seç'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Ana grup').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Ali'), findsOneWidget);
+    expect(find.text('Veli'), findsNothing);
+
+    // Uygulama yeniden açılınca seçili grup korunur.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+    expect(find.text('Ana grup'), findsOneWidget);
+    expect(find.text('Ali'), findsOneWidget);
+  });
 }
