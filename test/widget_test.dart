@@ -134,4 +134,40 @@ void main() {
     expect(find.text('Volkan'), findsOneWidget);
     expect(find.byIcon(Icons.sports_handball), findsOneWidget);
   });
+
+  testWidgets('Takımları Kur sadece Geliyor işaretli oyuncuları kullanır', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+    await addPlayer(tester, 'Ali', 5);
+    await addPlayer(tester, 'Veli', 3);
+    await addPlayer(tester, 'Can', 4);
+    expect(find.byType(Checkbox), findsNWidgets(3));
+
+    await tester.tap(find.byType(Checkbox).at(2));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Takımları Kur'));
+    await tester.pumpAndSettle();
+    expect(find.text('Ali'), findsOneWidget);
+    expect(find.text('Can'), findsNothing);
+
+    await tester.tap(find.text('Sonucu Kaydet'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).at(0), '1');
+    await tester.enterText(find.byType(TextField).at(1), '1');
+    await tester.tap(find.text('Kaydet'));
+    await tester.pumpAndSettle();
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    // Gelmeyen oyuncu listede kalır, sonucu etkilenmez.
+    expect(find.text('Can'), findsOneWidget);
+    expect(find.text('G 0 · B 1 · M 0'), findsNWidgets(2));
+    expect(find.text('G 0 · B 0 · M 0'), findsOneWidget);
+
+    await tester.tap(find.byType(Checkbox).at(1));
+    await tester.pumpAndSettle();
+    final button = tester.widget<FilledButton>(find.byType(FilledButton));
+    expect(button.onPressed, isNull);
+  });
 }

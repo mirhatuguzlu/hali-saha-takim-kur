@@ -27,6 +27,7 @@ void main() {
         'wins': 0,
         'draws': 0,
         'losses': 0,
+        'isComing': true,
       },
       {
         'id': '2',
@@ -36,6 +37,7 @@ void main() {
         'wins': 0,
         'draws': 0,
         'losses': 0,
+        'isComing': true,
       },
     ]);
   });
@@ -45,5 +47,6 @@ void main() {
     expect(p.isGoalkeeper, isFalse);
     expect(p.rating, 4);
     expect([p.wins, p.draws, p.losses], [0, 0, 0]);
+    expect(p.isComing, isTrue);
   });
 }

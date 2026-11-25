@@ -19,11 +19,7 @@ List<Player> applyResult(
   ];
 }
 
-Player _withResult(Player p, int diff) => Player(
-  id: p.id,
-  name: p.name,
-  rating: p.rating,
-  isGoalkeeper: p.isGoalkeeper,
+Player _withResult(Player p, int diff) => p.copyWith(
   wins: p.wins + (diff > 0 ? 1 : 0),
   draws: p.draws + (diff == 0 ? 1 : 0),
   losses: p.losses + (diff < 0 ? 1 : 0),

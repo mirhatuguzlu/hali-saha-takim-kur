@@ -21,6 +21,7 @@ Haftalık halı saha maçı yapan arkadaş grupları ve özellikle maçı organi
 - **Kaleci:** Oyuncuyu kaleci olarak işaretleme; kaleciler takımlara ayrı dağıtılır, iki kaleci aynı takıma düşmez.
 - **WhatsApp için kopyalama:** Kurulan takımları tek tuşla panoya kopyalayıp gruba yapıştırma.
 - **Maç sonucu:** Skoru kaydetme; her oyuncunun galibiyet, beraberlik ve mağlubiyet sayısı tutulur.
+- **Maç günü yoklaması:** O hafta gelecek oyuncuları işaretleme; takımlar sadece gelenlerle kurulur.
 
 ## Pano
 
@@ -80,6 +81,14 @@ flutter test
 3. İki takımın gol sayısını gir (ör. 3 – 1) ve **Kaydet**'e bas; "Sonuç kaydedildi" bildirimi görünür.
 4. Geri ok ile listeye dön; kazanan takımdakilerde G, kaybedenlerde M bir artmıştır (beraberlikte herkeste B).
 5. Sayfayı yenile; galibiyet/beraberlik/mağlubiyet sayıları korunur.
+
+### Özellik 6: Maç günü yoklaması
+
+1. En az 3 oyuncu ekle; her oyuncunun solunda işaretli **Geliyor** kutusu görünür.
+2. O hafta gelmeyecek bir oyuncunun kutusunun işaretini kaldır.
+3. **Takımları Kur**'a bas; işareti kaldırılan oyuncu takımlarda yer almaz.
+4. Sonucu kaydedip geri dön; gelmeyen oyuncu listede kalır, G/B/M sayıları değişmez.
+5. İşaretli oyuncu sayısı 2'nin altına düşünce **Takımları Kur** pasif olur.
 
 ## Geliştirme süreci
 

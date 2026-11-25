@@ -41,6 +41,7 @@ class _PlayersScreenState extends State<PlayersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final coming = _players.where((p) => p.isComing).toList();
     return Scaffold(
       appBar: AppBar(title: const Text('Halı Saha Takım Kur')),
       body: _players.isEmpty
@@ -54,6 +55,14 @@ class _PlayersScreenState extends State<PlayersScreen> {
                     onDismissed: (_) =>
                         _update(_players.where((x) => x.id != p.id).toList()),
                     child: ListTile(
+                      leading: Checkbox(
+                        value: p.isComing,
+                        semanticLabel: 'Geliyor',
+                        onChanged: (v) => _update([
+                          for (final x in _players)
+                            x.id == p.id ? x.copyWith(isComing: v) : x,
+                        ]),
+                      ),
                       title: Text(p.name),
                       subtitle: Row(
                         children: [
@@ -75,13 +84,14 @@ class _PlayersScreenState extends State<PlayersScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
         child: FilledButton(
-          onPressed: _players.length < 2
+          onPressed: coming.length < 2
               ? null
               : () async {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => TeamsScreen(players: _players),
+                      builder: (_) =>
+                          TeamsScreen(players: coming, all: _players),
                     ),
                   );
                   _load();
