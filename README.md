@@ -22,6 +22,7 @@ Haftalık halı saha maçı yapan arkadaş grupları ve özellikle maçı organi
 - **WhatsApp için kopyalama:** Kurulan takımları tek tuşla panoya kopyalayıp gruba yapıştırma.
 - **Maç sonucu:** Skoru kaydetme; her oyuncunun galibiyet, beraberlik ve mağlubiyet sayısı tutulur.
 - **Maç günü yoklaması:** O hafta gelecek oyuncuları işaretleme; takımlar sadece gelenlerle kurulur.
+- **Puan önerisi:** Üst üste 3 maç kazanan oyuncuya puan artırma önerisi; onaylanınca puan 1 artar (en fazla 5).
 
 ## Pano
 
@@ -89,6 +90,13 @@ flutter test
 3. **Takımları Kur**'a bas; işareti kaldırılan oyuncu takımlarda yer almaz.
 4. Sonucu kaydedip geri dön; gelmeyen oyuncu listede kalır, G/B/M sayıları değişmez.
 5. İşaretli oyuncu sayısı 2'nin altına düşünce **Takımları Kur** pasif olur.
+
+### Özellik 7: Puan önerisi
+
+1. 2 oyuncu ekleyip **Takımları Kur**'a bas, aynı oyuncunun takımının kazandığı bir skorla **Sonucu Kaydet**.
+2. Aynı oyuncunun takımı üst üste 3 maç kazanana kadar tekrarla (beraberlik ya da mağlubiyet seriyi sıfırlar).
+3. Oyuncu listesinde o oyuncunun yanında yeşil **Puanı artır** (yukarı ok) simgesi görünür.
+4. Simgeye bas, **Artır**'ı onayla; oyuncunun yıldızı 1 artar ve simge kaybolur. Puanı 5 olan oyuncuya öneri çıkmaz.
 
 ## Geliştirme süreci
 

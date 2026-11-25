@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../data/player_store.dart';
+import '../logic/match_result.dart';
 import '../models/player.dart';
 import 'teams_screen.dart';
 
@@ -29,6 +30,31 @@ class _PlayersScreenState extends State<PlayersScreen> {
   void _update(List<Player> players) {
     setState(() => _players = players);
     _store.save(players);
+  }
+
+  Future<void> _confirmRaise(Player p) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Puanı artır'),
+        content: Text(
+          '${p.name} üst üste ${p.winStreak} maç kazandı. '
+          'Puanı ${p.rating} → ${p.rating + 1} yapılsın mı?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Şimdi değil'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Artır'),
+          ),
+        ],
+      ),
+    );
+    if (ok != true) return;
+    _update([for (final x in _players) x.id == p.id ? raiseRating(x) : x]);
   }
 
   Future<void> _addPlayer() async {
@@ -71,12 +97,23 @@ class _PlayersScreenState extends State<PlayersScreen> {
                           Text('G ${p.wins} · B ${p.draws} · M ${p.losses}'),
                         ],
                       ),
-                      trailing: p.isGoalkeeper
-                          ? const Icon(
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (suggestsRaise(p))
+                            IconButton(
+                              tooltip: 'Puanı artır',
+                              color: Colors.green,
+                              icon: const Icon(Icons.trending_up),
+                              onPressed: () => _confirmRaise(p),
+                            ),
+                          if (p.isGoalkeeper)
+                            const Icon(
                               Icons.sports_handball,
                               semanticLabel: 'Kaleci',
-                            )
-                          : null,
+                            ),
+                        ],
+                      ),
                     ),
                   ),
               ],

@@ -32,4 +32,38 @@ void main() {
     expect(r[0].name, 'Ali');
     expect(r[0].rating, 5);
   });
+
+  test('galibiyet seriyi artırır, beraberlik ve mağlubiyet sıfırlar', () {
+    const p = Player(id: '1', name: 'Ali', rating: 3, winStreak: 2);
+    const q = Player(id: '2', name: 'Veli', rating: 3, winStreak: 2);
+    final won = applyResult([p, q], [p], [q], 2, 0);
+    expect(won.map((x) => x.winStreak), [3, 0]);
+    final drew = applyResult([p], [p], [], 1, 1);
+    expect(drew.single.winStreak, 0);
+  });
+
+  test('üst üste 3 galibiyette puan artırma önerilir', () {
+    expect(
+      suggestsRaise(const Player(id: '1', name: 'A', rating: 3, winStreak: 2)),
+      isFalse,
+    );
+    expect(
+      suggestsRaise(const Player(id: '1', name: 'A', rating: 3, winStreak: 3)),
+      isTrue,
+    );
+    expect(
+      suggestsRaise(const Player(id: '1', name: 'A', rating: 5, winStreak: 4)),
+      isFalse,
+    );
+  });
+
+  test('onaylanınca puan 1 artar, en fazla 5, seri sıfırlanır', () {
+    final r = raiseRating(
+      const Player(id: '1', name: 'A', rating: 4, winStreak: 3),
+    );
+    expect(r.rating, 5);
+    expect(r.winStreak, 0);
+    expect(suggestsRaise(r), isFalse);
+    expect(raiseRating(r).rating, 5);
+  });
 }

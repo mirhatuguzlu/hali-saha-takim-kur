@@ -28,6 +28,7 @@ void main() {
         'draws': 0,
         'losses': 0,
         'isComing': true,
+        'winStreak': 0,
       },
       {
         'id': '2',
@@ -38,6 +39,7 @@ void main() {
         'draws': 0,
         'losses': 0,
         'isComing': true,
+        'winStreak': 0,
       },
     ]);
   });
