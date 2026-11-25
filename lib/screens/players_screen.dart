@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../data/player_store.dart';
 import '../models/player.dart';
+import 'teams_screen.dart';
 
 class PlayersScreen extends StatefulWidget {
   const PlayersScreen({super.key});
@@ -64,9 +65,12 @@ class _PlayersScreenState extends State<PlayersScreen> {
         child: FilledButton(
           onPressed: _players.length < 2
               ? null
-              : () =>
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(content: Text('Yakında'))),
+              : () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => TeamsScreen(players: _players),
+                  ),
+                ),
           child: const Text('Takımları Kur'),
         ),
       ),
