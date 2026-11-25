@@ -36,7 +36,7 @@ void main() {
     await addPlayer(tester, '   ', 3);
 
     expect(find.byType(AlertDialog), findsOneWidget);
-    expect(find.byType(ListTile), findsNothing);
+    expect(find.byType(Dismissible), findsNothing);
   });
 
   testWidgets('Takımları Kur iki takımı ve güç farkını gösterir', (
@@ -66,5 +66,19 @@ void main() {
     await tester.drag(find.text('Veli'), const Offset(-500, 0));
     await tester.pumpAndSettle();
     expect(find.text('Veli'), findsNothing);
+  });
+
+  testWidgets('kaleci işaretlenince listede simgesi görünür', (tester) async {
+    await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'Volkan');
+    await tester.tap(find.text('Kaleci'));
+    await tester.tap(find.text('Ekle'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Volkan'), findsOneWidget);
+    expect(find.byIcon(Icons.sports_handball), findsOneWidget);
   });
 }

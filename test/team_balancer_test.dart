@@ -9,6 +9,18 @@ List<Player> players(List<int> ratings) => [
     Player(id: '$i', name: 'P$i', rating: ratings[i]),
 ];
 
+List<Player> withKeepers(List<int> ratings, int keepers) => [
+  for (var i = 0; i < ratings.length; i++)
+    Player(
+      id: '$i',
+      name: 'P$i',
+      rating: ratings[i],
+      isGoalkeeper: i < keepers,
+    ),
+];
+
+int keepers(List<Player> team) => team.where((p) => p.isGoalkeeper).length;
+
 int power(List<Player> team) => team.fold(0, (s, p) => s + p.rating);
 
 void main() {
@@ -47,6 +59,40 @@ void main() {
     final all = players([5, 5, 4, 4, 3, 3, 2, 2, 1, 1]);
     final (a1, b1) = balanceTeams(all, rng: Random(42));
     final (a2, b2) = balanceTeams(all, rng: Random(42));
+    expect(a1.map((p) => p.id), a2.map((p) => p.id));
+    expect(b1.map((p) => p.id), b2.map((p) => p.id));
+  });
+
+  test('2 kaleci her takıma birer tane düşer', () {
+    for (var seed = 0; seed < 20; seed++) {
+      final (a, b) = balanceTeams(
+        withKeepers([1, 1, 5, 5, 4, 3, 2, 2], 2),
+        rng: Random(seed),
+      );
+      expect(keepers(a), 1);
+      expect(keepers(b), 1);
+      expect((a.length - b.length).abs(), lessThanOrEqualTo(1));
+    }
+  });
+
+  test('3 kaleci varsa her takımda en az 1 kaleci olur', () {
+    for (var seed = 0; seed < 20; seed++) {
+      final (a, b) = balanceTeams(
+        withKeepers([5, 2, 1, 4, 3, 3, 2], 3),
+        rng: Random(seed),
+      );
+      expect(keepers(a), greaterThanOrEqualTo(1));
+      expect(keepers(b), greaterThanOrEqualTo(1));
+      expect((a.length - b.length).abs(), lessThanOrEqualTo(1));
+    }
+  });
+
+  test('kaleci yoksa sonuç eskisiyle aynı', () {
+    final (a1, b1) = balanceTeams(players([5, 4, 3, 2, 1, 1]), rng: Random(7));
+    final (a2, b2) = balanceTeams(
+      withKeepers([5, 4, 3, 2, 1, 1], 0),
+      rng: Random(7),
+    );
     expect(a1.map((p) => p.id), a2.map((p) => p.id));
     expect(b1.map((p) => p.id), b2.map((p) => p.id));
   });
